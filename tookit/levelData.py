@@ -98,13 +98,13 @@ class LevelData:
         """
         urllist = [d['link'] if d['link'] != '' else d['host'] for d in self.assets]
         portlist = [d['port'] for d in self.assets]
-        titleList = [d['title'] for d in self.assets]
+        # titleList = [d['title'] for d in self.assets]
         iplist = [d['ip'] for d in self.assets]
         for i in range(len(urllist)):
             temp_dic = {}
             temp_dic["url"] = urllist[i].strip()
             temp_dic["port"] = portlist[i]
-            temp_dic["title"] = titleList[i].strip()
+            #temp_dic["title"] = titleList[i].strip()
             temp_dic["ip"] = iplist[i].strip()
             self.format_data.append(temp_dic)
 
