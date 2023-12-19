@@ -487,31 +487,32 @@ class FofaMain:
 
         return search_key_modify
 
+    import os
+
     def removeDuplicate(self):
         """
         去除重复值
         @return:
         """
-        f = open(self.filename, "r", encoding='utf-8')
-        text_list = []
-        s = set()
-        document = f.readlines()
-        document_num = int(len(document))
-        content = [x.strip() for x in document]
-        for x in range(0, len(content)):
-            text = content[x]
-            if text not in s:
-                s.add(text)
-                text_list.append(text)
-        with open("final_" + str(self.filename), 'a+', encoding='utf-8') as final:
-            for i in range(len(text_list)):
-                # s = str(i).split()
-                s = str(text_list[i])
-                s = s + '\n'
-                final.write(s)
-        f.close()
-        final.close()
-        return int(len(text_list))
+        with open(self.filename, "r", encoding='utf-8') as f:
+            document = f.readlines()
+
+        # 使用集合来去除重复行
+        unique_lines = set(line.strip() for line in document if line.strip())
+
+        # 获取原始文件的目录和文件名
+        dir_name = os.path.dirname(self.filename)
+        base_name = os.path.basename(self.filename)
+
+        # 创建新的文件名，添加 'final_' 前缀
+        final_filename = os.path.join(dir_name, "final_" + base_name)
+
+        # 写入去重后的数据
+        with open(final_filename, 'w', encoding='utf-8') as final:
+            for line in unique_lines:
+                final.write(line + '\n')
+
+        return len(unique_lines)
 
     def cleanInitParameters(self):
         """

@@ -81,11 +81,19 @@ def main():
     if search_key:
         if outputname:
             filename="{}.{}".format(outputname,output)
+
+            # 获取原始文件的目录和文件名
+            dir_name = os.path.dirname(filename)
+            base_name = os.path.basename(filename)
+
+            # 创建新的文件名，添加 'final_' 前缀
+            final_filename = os.path.join(dir_name, "final_" + base_name)
+
             # 检查文件是否存在
             if os.path.exists(filename):
                 # 如果存在，删除文件
                 os.remove(filename)
-                os.remove("final_"+filename)
+                os.remove(final_filename)
         else:
             filename = "{}_{}.{}".format(unit.md5(search_key), int(time.time()), output)
         output_data = OutputData(filename, level, pattern=output)
