@@ -344,6 +344,9 @@ class FofaMain:
             if self.output == 'txt':
                 finalint = self.removeDuplicate()
                 print(colorize(_('[*] 去重结束，最终数据 {} 条').format(str(finalint)),"green"))
+            elif self.output == 'json':
+                finalint = self.removeDuplicateJson()
+                print(colorize(_('[*] 去重结束，最终数据 {} 条').format(str(finalint)), "green"))
             else:
                 print(colorize(_('[*] 输出类型为其他,不进行去重操作 '),"green"))
             self.EXIT_FLAG = True
@@ -513,6 +516,30 @@ class FofaMain:
                 final.write(line + '\n')
 
         return len(unique_lines)
+    def removeDuplicateJson(self):
+        # 从json文件加载数据
+        with open(self.filename, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        # 使用集合进行去重，需要先把字典转化为不可变类型（如元组）来添加到集合中
+        # 这里假设data的每一项都是一个字典
+        unique_data = set(tuple(item.items()) for item in data)
+
+        # 把去重后的数据转化回字典类型
+        unique_data = [dict(item) for item in unique_data]
+
+        # 获取原始文件的目录和文件名
+        dir_name = os.path.dirname(self.filename)
+        base_name = os.path.basename(self.filename)
+
+        # 创建新的文件名，添加 'final_' 前缀
+        final_filename = os.path.join(dir_name, "final_" + base_name)
+
+        # 写入去重后的数据
+        with open(final_filename, 'w', encoding='utf-8') as final:
+            json.dump(unique_data, final, ensure_ascii=False, indent=4)
+
+        return len(unique_data)
 
     def cleanInitParameters(self):
         """
@@ -559,6 +586,7 @@ class FofaMain:
 
     def _destroy(self):
         self.removeDuplicate()
+        self.removeDuplicateJson()
         sys.exit(0)
 
 
