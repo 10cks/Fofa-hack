@@ -93,6 +93,8 @@ def main():
             if os.path.exists(filename):
                 # 如果存在，删除文件
                 os.remove(filename)
+            if os.path.exists(final_filename):
+                # 如果存在，删除文件
                 os.remove(final_filename)
         else:
             filename = "{}_{}.{}".format(unit.md5(search_key), int(time.time()), output)
