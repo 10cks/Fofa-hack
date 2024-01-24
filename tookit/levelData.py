@@ -102,7 +102,7 @@ class LevelData:
         iplist = [d['ip'] for d in self.assets]
         for i in range(len(urllist)):
             temp_dic = {}
-            temp_dic["url"] = urllist[i].strip()
+            temp_dic["link"] = urllist[i].strip()
             temp_dic["port"] = portlist[i]
             #temp_dic["title"] = titleList[i].strip()
             temp_dic["ip"] = iplist[i].strip()

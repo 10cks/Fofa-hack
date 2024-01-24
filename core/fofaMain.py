@@ -282,7 +282,7 @@ class FofaMain:
                     if self.level == "1":
                         self.host_set.add(data)
                     elif self.level == "2":
-                        self.host_set.add(data["url"])
+                        self.host_set.add(data["link"])
                     else :
                         self.host_set.add(data["id"])
 
